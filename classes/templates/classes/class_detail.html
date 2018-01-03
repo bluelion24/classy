@@ -1,0 +1,13 @@
+<h1>{{course.class_type}}</h1>
+<h2>{{course}}</h2>
+
+{% if course.student_set.all %}
+
+<ul>
+{% for student in course.student_set.all %} 
+    <li><a href="{% url 'classes:student_detail' student.id %}">{{ student }}</a></li> 
+{% endfor %} 
+</ul>
+{% else %}
+    <p>No student_set</p>
+{% endif %}

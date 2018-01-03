@@ -1,0 +1,32 @@
+ from datetime import datetime
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
+from django.http import Http404
+from django.shortcuts import get_object_or_404, render
+
+from .models import Course, Class_type, Training_site
+
+def index(request):
+    latest_class_list = Course.objects.order_by('-class_date_time')[:5]
+    template = loader.get_template('classes/index.html')
+    context = { 'latest_class_list':latest_class_list,}
+    return HttpResponse(template.render(context, request))
+   
+   # output = ', '.join([q.course_type for q in latest_class_list])
+   # return HttpResponse('Classes APP!'+'How many Course objects: %s' % len(latest_class_list))
+
+def class_detail(request, class_id):
+    course = get_object_or_404(Course, pk=class_id)  
+    return render(request, 'classes/detail.html', {'course':course})
+
+   # response = "Here is the most recent class offered: %s"
+   # return HttpResponse(response % class_id)
+
+def class_list(request, class_id):
+    return HttpResponse('Here is a list of the 5 most recent HCP classes offered %s' % class_id)
+
+
+
+
+# Create your views here.

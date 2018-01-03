@@ -1,0 +1,11 @@
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^(?P<class_id>[0-9]+)/$', views.index, name='index'),
+    url(r'^November 18, Saturday 7:30am - 8:30am
+November 30, Thursday 4:30pm - 5:30pm
+December 9, Saturday 7:30am - 8:30am$', views.class_detail, name='class_detail'),
+    url(r'^$', views.class_list, name='class_list'),
+
+]

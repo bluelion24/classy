@@ -10,45 +10,41 @@ class Training_site(models.Model):
     training_site_zip_code = models.PositiveIntegerField(default=0)
 
     def __str__(self):
-        return "Training site: " + self.training_site_name
+        return self.training_site_name
     
     def get_training_site(self):
-        return self.training_site_name + ' ' + self.class_street_address + ' ' + self.class_city 
+        return self.training_site_name + class_street_address
 
 class Class_type(models.Model):
-    training_site = models.ForeignKey(Training_site, on_delete=models.CASCADE)
+    training_site = models.ManyToManyField(Training_site)
     class_name = models.CharField(max_length = 200, default = 'nully')
     
     def __str__(self):
-        return str(self.training_site) + "   Class name: " + self.class_name 
+        return self.class_name #+ self.training_site.training_site_name
 
 class Course(models.Model):
     class_type = models.ForeignKey(Class_type, on_delete=models.CASCADE)
    # class_date_time = models.DateTimeField(null=True, blank=True)  
-    class_date_time = models.DateField(null=True, blank=True)
+    class_date_time = models.DateField(null=True, blank=True )
     class_roster = models.CharField(max_length = 200, default='nully')
     class_query_type = models.CharField(max_length = 200, default='nully')
 #    roster = Student.Coursey.all()
-#    class_id = models.AutoField(primary_key=True)
+    class_id = models.AutoField(primary_key=True)
 #    def __myTimeFunction__(year, month, day):
 #        self.class_date_time = year
 #         self.class_date_time = month
 #         self.class_date_time = day
 
-    def myfunction(self):
-        return 'myfunction() works!'
-
-    def print_roster(self):
-        return 'test'
+    def __myfunction__(self):
+        return self.Coursey.all()
 
     def __str__(self):
-        return str(self.class_type) + "   Class date:  "  + str(self.class_date_time) + "   Course_id: " + str(self.id)  
+        return "Here is class name: " + self.class_type.class_name + "  Here is date:  -- " # + str(self.class_date_time) 
 
 class Student(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course, related_name="Coursey")
     first_name = models.CharField(max_length = 75, default='nully')
     last_name = models.CharField(max_length = 150, default='nully')
-    middle_name = models.CharField(max_length = 100, blank = True, default='')
     class_type = models.TextField(max_length = 200, default='nully')
     order_id = models.CharField(max_length = 200, default='nully')
     order_date = models.CharField(max_length = 200, default='nully')
@@ -58,14 +54,8 @@ class Student(models.Model):
     classes_incomplete = models.CharField(max_length = 200)
 #    roster = Coursey.objects.all()
 
-    def studentDetail(self):
-        return 'Student name: ' + self.first_name + '  ' + self.last_name + '  ' + str(self.course)
     def __str__(self):
-        return 'Student name: ' + self.last_name + '  '  + self.first_name 
-
-    class Meta:
-        #Alphabetical order
-        ordering = ['last_name']
+        return self.roster + self.first_name + self.last_name
 
 class Customer(models.Model):
     coursex = models.ForeignKey(Student, related_name = 'Student')

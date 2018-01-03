@@ -1,0 +1,12 @@
+<h1>Student Detail</h1>
+
+{% if student %}
+    <ul>
+        First Name: {{ student.first_name | linebreaks}}
+        Last Name: {{student.last_name | linebreaks}}
+        Course: {{student.course | linebreaks}}
+    </ul>
+{% else %}
+    <p>NO student detail available.</p>
+{% endif %}
+

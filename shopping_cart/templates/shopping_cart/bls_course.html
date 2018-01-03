@@ -1,0 +1,4 @@
+    {% for course in course_list %}
+        <li><a href = "{% url 'shopping_cart:class_detail' course.id %}">{{ course.print_roster() }}</a></li>
+    {% endfor %}
+
